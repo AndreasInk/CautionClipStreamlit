@@ -23,7 +23,7 @@ else:
     messages=st.session_state.messages
     )
         
-        st.chat_message("Caution Clip").write(response.choices[0].content.text)
+        st.chat_message("Caution Clip").write(response.choices[0].content)
         # Display the image
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
@@ -42,6 +42,6 @@ else:
     messages=st.session_state.messages
     )
 
-        msg = response.choices[0].content.text
+        msg = response.choices[0].content
         st.session_state.messages.append(msg)
         st.chat_message("Caution Clip").write(msg.content)

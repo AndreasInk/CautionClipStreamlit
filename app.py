@@ -8,7 +8,7 @@ client = OpenAI()
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": {"text": "How can I help you?"}}]
 
 if len(st.session_state.messages) > 5:
     st.warning("You've sent too many messages, please try again later")

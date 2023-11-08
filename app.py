@@ -44,4 +44,4 @@ else:
 
         msg = response.choices[0].message.content
         st.session_state.messages.append(msg)
-        st.chat_message("Caution Clip").write(msg.content)
+        st.chat_message("Caution Clip").write(msg)

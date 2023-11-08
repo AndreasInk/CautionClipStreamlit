@@ -18,13 +18,12 @@ else:
         # Open the image with PIL
         image = Image.open(uploaded_file)
         st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
-        st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
         response = client.chat.completions.create(
     model="gpt-4-vision-preview",
     messages=st.session_state.messages
     )
         
-        st.chat_message("Caution Clip").write(response["content"]["text"])
+        st.chat_message("Caution Clip").write(response.choices[0].content.text)
         # Display the image
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
@@ -43,6 +42,6 @@ else:
     messages=st.session_state.messages
     )
 
-        msg = response.choices[0].message
+        msg = response.choices[0].content.text
         st.session_state.messages.append(msg)
         st.chat_message("Caution Clip").write(msg.content)

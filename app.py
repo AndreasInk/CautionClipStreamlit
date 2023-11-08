@@ -27,9 +27,6 @@ else:
         # Display the image
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    openai_api_key = st.secrets["key"]
-    client.api_key = openai_api_key
-
     st.title("💬 Caution Clip Chat")
     st.caption("🚀 Upload images and chat about industrial workplace safety")
 

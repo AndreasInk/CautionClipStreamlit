@@ -18,6 +18,7 @@ else:
         # Open the image with PIL
         image = Image.open(uploaded_file)
         st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
+        st.session_state.messages += [{"content": "Analyze the safety of this image, suggest safety procedures"}]
         response = client.chat.completions.create(
     model="gpt-4-vision-preview",
     messages=st.session_state.messages

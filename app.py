@@ -1,9 +1,14 @@
 import streamlit as st
 from openai import OpenAI
 from PIL import Image
+import base64
 
 client = OpenAI()
 
+def encode_image(img):
+
+    return base64.b64encode(img.read()).decode('utf-8')
+    
 # Create a file uploader widget
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
@@ -19,6 +24,7 @@ else:
         image = Image.open(uploaded_file)
         st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
         st.session_state.messages += [{"role": "user", "content": "Analyze the safety of this image, suggest safety procedures"}]
+        st.session_state.messages += [{"role": "user", "content": {"type": "image_url", "url": f"data:image/jpeg;base64,{encode_image(image)}"}}]
         response = client.chat.completions.create(
     model="gpt-4-vision-preview",
     messages=st.session_state.messages

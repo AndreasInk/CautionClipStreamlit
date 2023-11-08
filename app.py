@@ -7,6 +7,9 @@ client = OpenAI()
 # Create a file uploader widget
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+
 if len(st.session_state.messages) > 5:
     st.warning("You've sent too many messages, please try again later")
 else:
@@ -29,8 +32,6 @@ else:
 
     st.title("💬 Caution Clip Chat")
     st.caption("🚀 Upload images and chat about industrial workplace safety")
-    if "messages" not in st.session_state:
-        st.session_state["messages"] = [{"role": "assistant", "content": {"type": "text", "text": "How can I help you?"}}]
 
     for msg in st.session_state.messages:
         st.chat_message(msg["role"]).write(msg["content"]["text"])

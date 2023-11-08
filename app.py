@@ -8,7 +8,7 @@ client = OpenAI()
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": {"text": "How can I help you?"}}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
 if len(st.session_state.messages) > 5:
     st.warning("You've sent too many messages, please try again later")
@@ -17,6 +17,7 @@ else:
     if uploaded_file is not None:
         # Open the image with PIL
         image = Image.open(uploaded_file)
+        st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
         st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
         response = client.chat.completions.create(
     model="gpt-4-vision-preview",
@@ -31,10 +32,10 @@ else:
     st.caption("🚀 Upload images and chat about industrial workplace safety")
 
     for msg in st.session_state.messages:
-        st.chat_message(msg["role"]).write(msg["content"]["text"])
+        st.chat_message(msg["role"]).write(msg["content"])
 
     if prompt := st.chat_input():
-        st.session_state.messages.append({"role": "user", "content": {"type": "text", "text": prompt}})
+        st.session_state.messages.append({"role": "user", "content": prompt})
         st.chat_message("user").write(prompt)
 
         response = client.chat.completions.create(

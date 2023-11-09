@@ -21,7 +21,6 @@ def encode_image(image):
     return base64.b64encode(img_byte).decode('utf-8')
     
 # Create a file uploader widget
-uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
@@ -60,6 +59,8 @@ if "messages" not in st.session_state:
     if len(st.session_state.messages) > 5:
         st.warning("You've sent too many messages, please try again later")
     else:
+        uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
+
     # Check if an image has been uploaded
         if uploaded_file is not None:
             # Open the image with PIL

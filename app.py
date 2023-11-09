@@ -7,7 +7,7 @@ client = OpenAI()
 
 def encode_image(img):
 
-    return base64.b64encode(img.read()).decode('utf-8')
+    return base64.b64encode(img).decode('utf-8')
     
 # Create a file uploader widget
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])

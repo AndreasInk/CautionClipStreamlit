@@ -73,11 +73,11 @@ else:
         with open(markdown_file_path, 'r', encoding='utf-8') as file:
             markdown_content = file.read()
 
-            {"role": "system", "content": f"Here's a document that outlines what Caution Clip is: \n\n{markdown_content}"}
+            system_prompt = [{"role": "system", "content": f"Here's a document that outlines what Caution Clip is: \n\n{markdown_content}"}]
 
             response = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages=st.session_state.messages
+        messages=system_prompt + st.session_state.messages
         )
 
             msg = response.choices[0].message.content

@@ -20,7 +20,7 @@ def encode_image(image):
     return base64.b64encode(img_byte).decode('utf-8')
     
 # Create a file uploader widget
-uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
+uploaded_file = None#st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
 
 if "messages" not in st.session_state:
@@ -57,7 +57,7 @@ else:
 
     st.image("https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/doc/A52ACDBF-362E-48DB-B76E-34FDE4919297/5F1555AE-C787-422A-A512-2666E55698DD_2/y3ZBnbZTkyxBp7XJbPbs9K7vxpFnhnrpB831zvZPfvYz/Group%2019.png")
     st.title("💬 Caution Clip Chat")
-    st.caption("🚀 Upload images and chat about industrial workplace safety and ask questions about Caution Clip")
+    st.caption("🚀 Ask questions about Caution Clip and chat about industrial workplace safety")
 
     for msg in st.session_state.messages:
         try:

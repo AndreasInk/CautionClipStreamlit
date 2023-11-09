@@ -62,7 +62,10 @@ else:
     st.caption("🚀 Upload images and chat about industrial workplace safety")
 
     for msg in st.session_state.messages:
-        st.chat_message(msg["role"]).write(msg["content"])
+        try:
+            st.chat_message(msg["role"]).write(msg["content"])
+        except:
+            break
 
     if prompt := st.chat_input():
         st.session_state.messages.append({"role": "user", "content": prompt})

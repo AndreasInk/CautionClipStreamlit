@@ -38,7 +38,7 @@ else:
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "Analyze the safety of this image, suggest safety procedures and respond to any previous messages by me"},
+                {"type": "text", "text": "Analyze the safety of this image, suggest safety procedures"},
                 {
                     "type": "image_url",
                     "image_url": {
@@ -66,12 +66,20 @@ else:
     if prompt := st.chat_input():
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.chat_message("user").write(prompt)
+        # Replace 'your_markdown_file.md' with the path to your Markdown file
+        markdown_file_path = './about.md'
 
-        response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=st.session_state.messages
-    )
+        # Open the file and read it into a string
+        with open(markdown_file_path, 'r', encoding='utf-8') as file:
+            markdown_content = file.read()
 
-        msg = response.choices[0].message.content
-        st.session_state.messages.append(msg)
-        st.chat_message("Caution Clip").write(msg)
+            {"role": "system", "content": f"Here's a document that outlines what Caution Clip is: \n\n{markdown_content}"}
+
+            response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=st.session_state.messages
+        )
+
+            msg = response.choices[0].message.content
+            st.session_state.messages.append(msg)
+            st.chat_message("Caution Clip").write(msg)

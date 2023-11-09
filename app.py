@@ -83,6 +83,6 @@ else:
         model="gpt-3.5-turbo",
         messages=system_prompt + st.session_state.messages
         )
-            new_message = {"role": "assistant", "content": response.choices[0].message.content}
-            st.session_state.messages.append(new_message)
+            new_message = [{"role": "assistant", "content": response.choices[0].message.content}]
+            st.session_state.messages += new_message
             st.chat_message("Caution Clip").write(response.choices[0].message.content)

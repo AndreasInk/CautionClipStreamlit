@@ -3,7 +3,6 @@ from openai import OpenAI
 from PIL import Image
 import base64
 from io import BytesIO
-import json
 
 client = OpenAI()
 
@@ -34,7 +33,9 @@ else:
     if uploaded_file is not None:
         # Open the image with PIL
         image = Image.open(uploaded_file)
-        st.session_state.messages += [
+        response = client.chat.completions.create(
+    model="gpt-4-vision-preview",
+    messages=st.session_state.messages + [
         {
             "role": "user",
             "content": [
@@ -48,12 +49,9 @@ else:
             ],
         }
     ]
-        response = client.chat.completions.create(
-    model="gpt-4-vision-preview",
-    messages=st.session_state.messages
     )
         
-        st.chat_message("Caution Clip").write(response.choices[0].message.content)
+        st.chat_message("assistant").write(response.choices[0].message.content)
         # Display the image
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
@@ -85,4 +83,4 @@ else:
         )
             new_message = [{"role": "assistant", "content": response.choices[0].message.content}]
             st.session_state.messages += new_message
-            st.chat_message("Caution Clip").write(response.choices[0].message.content)
+            st.chat_message("assistant").write(response.choices[0].message.content)

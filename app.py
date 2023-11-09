@@ -34,7 +34,20 @@ else:
         image = Image.open(uploaded_file)
         st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
         st.session_state.messages += [{"role": "user", "content": "Analyze the safety of this image, suggest safety procedures"}]
-        st.session_state.messages += [{"role": "user", "content": {"type": "image_url", "url": f"data:image/jpeg;base64,{encode_image(image)}"}}]
+        st.session_state.messages += [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Analyze the safety of this image, suggest safety procedures and respond to any previous messages by me"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{encode_image(image)}",
+                    },
+                },
+            ],
+        }
+    ]
         response = client.chat.completions.create(
     model="gpt-4-vision-preview",
     messages=st.session_state.messages

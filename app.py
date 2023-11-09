@@ -2,12 +2,22 @@ import streamlit as st
 from openai import OpenAI
 from PIL import Image
 import base64
+from io import BytesIO
 
 client = OpenAI()
 
-def encode_image(img):
-
-    return base64.b64encode(img).decode('utf-8')
+def encode_image(image):
+    # Create a bytes buffer for the image
+    buffer = BytesIO()
+    
+    # Save the image to the buffer
+    image.save(buffer, format="JPEG")
+    
+    # Get the byte data from the buffer
+    img_byte = buffer.getvalue()
+    
+    # Encode the byte data to base64
+    return base64.b64encode(img_byte).decode('utf-8')
     
 # Create a file uploader widget
 uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])

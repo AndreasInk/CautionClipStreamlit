@@ -84,6 +84,5 @@ else:
         messages=system_prompt + st.session_state.messages
         )
 
-            msg = response.choices[0].message.content
-            st.session_state.messages.append(msg)
+            st.session_state.messages.append(response.choices[0].message)
             st.chat_message("Caution Clip").write(msg)

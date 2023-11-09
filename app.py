@@ -58,8 +58,9 @@ else:
         # Display the image
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
+    st.image("https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/doc/A52ACDBF-362E-48DB-B76E-34FDE4919297/74675152-5304-40DF-A8BA-08AE32118954_2/5H0jvy5m0s2OVG8VVKv6eCDsQOU5fcCypJG09vGUnToz/Group%2019.png")
     st.title("💬 Caution Clip Chat")
-    st.caption("🚀 Upload images and chat about industrial workplace safety")
+    st.caption("🚀 Upload images and chat about industrial workplace safety and ask questions about Caution Clip")
 
     for msg in st.session_state.messages:
         try:

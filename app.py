@@ -21,11 +21,42 @@ def encode_image(image):
     return base64.b64encode(img_byte).decode('utf-8')
     
 # Create a file uploader widget
+uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
-
+if len(st.session_state.messages) > 5:
+    st.warning("You've sent too many messages, please try again later")
+else:
+# Check if an image has been uploaded
+    if uploaded_file is not None:
+        # Open the image with PIL
+        image = Image.open(uploaded_file)
+        st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
+        st.session_state.messages += [{"role": "user", "content": "Analyze the safety of this image, suggest safety procedures"}]
+        st.session_state.messages += [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Analyze the safety of this image, suggest safety procedures"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{encode_image(image)}",
+                    },
+                },
+            ],
+        }
+    ]
+        response = client.chat.completions.create(
+    model="gpt-4-vision-preview",
+    messages=st.session_state.messages
+    )
+        
+        st.chat_message("Caution Clip").write(response.choices[0].message.content)
+        # Display the image
+        st.image(image, caption='Uploaded Image', use_column_width=True)
 
     st.image("https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/doc/A52ACDBF-362E-48DB-B76E-34FDE4919297/5F1555AE-C787-422A-A512-2666E55698DD_2/y3ZBnbZTkyxBp7XJbPbs9K7vxpFnhnrpB831zvZPfvYz/Group%2019.png")
     st.title("💬 Caution Clip Chat")
@@ -56,36 +87,3 @@ if "messages" not in st.session_state:
             new_message = [{"role": "assistant", "content": response.choices[0].message.content}]
             st.session_state.messages += new_message
             st.chat_message("Caution Clip").write(response.choices[0].message.content)
-    if len(st.session_state.messages) > 5:
-        st.warning("You've sent too many messages, please try again later")
-    else:
-        uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png', 'heic'])
-
-    # Check if an image has been uploaded
-        if uploaded_file is not None:
-            # Open the image with PIL
-            image = Image.open(uploaded_file)
-            st.chat_message("user").write("Analyze the safety of this image, suggest safety procedures")
-            st.session_state.messages += [{"role": "user", "content": "Analyze the safety of this image, suggest safety procedures"}]
-            st.session_state.messages += [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Analyze the safety of this image, suggest safety procedures"},
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:image/jpeg;base64,{encode_image(image)}",
-                        },
-                    },
-                ],
-            }
-        ]
-            response = client.chat.completions.create(
-        model="gpt-4-vision-preview",
-        messages=st.session_state.messages
-        )
-            
-            st.chat_message("Caution Clip").write(response.choices[0].message.content)
-            # Display the image
-            st.image(image, caption='Uploaded Image', use_column_width=True)

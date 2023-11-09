@@ -26,7 +26,7 @@ uploaded_file = None#st.file_uploader("Choose an image...", type=['jpg', 'jpeg',
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
-if len(st.session_state.messages) > 5:
+if len(st.session_state.messages) > 40:
     st.warning("You've sent too many messages, please try again later")
 else:
 # Check if an image has been uploaded

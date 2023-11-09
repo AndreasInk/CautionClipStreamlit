@@ -85,4 +85,4 @@ else:
         )
             new_message = [{"role": "assistant", "content": response.choices[0].message.content}]
             st.session_state.messages.append(new_message)
-            st.chat_message("Caution Clip").write(msg)
+            st.chat_message("Caution Clip").write(response.choices[0].message.content)

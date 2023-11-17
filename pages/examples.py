@@ -5,7 +5,11 @@ import time
 
 def mockStream(text: str):
      return text
-        
+
+st.set_page_config(
+    page_title="Caution Clip Cases",
+    page_icon="🪜",
+)     
 img = image_select(
     label="Select an image to see what Caution Clip can do",
     images=[
